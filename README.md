@@ -1,36 +1,86 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+# 🕸️ Weave Game Project
 
-First, run the development server:
+Welcome to the **Weave Game** project! This guide will help you get started with the codebase, install dependencies, set up your environment, and begin contributing to the project. Let's weave something awesome together! 🕹️
+
+## 🚀 Getting Started
+
+### Install Dependencies
+Run one of the following commands to install the required packages:
+```bash
+npm install  
+or  
+yarn install  
+or  
+pnpm install  
+or  
+bun install
+```
+### Set Up Environment Variables
+
+Copy the `.env.example` file to `.env.local`. Here's a sample of what your `.env.local` should look like:
+```
+AUTH_SECRET=""  # Added by `npx auth`. Learn more: [Auth.js CLI](https://cli.authjs.dev)  
+AUTH_GOOGLE_ID="CLIENT_ID_GOOGLE"  
+AUTH_GOOGLE_SECRET="CLIENT_SECRET_GOOGLE"  
+AUTH_FIREBASE_PROJECT_ID="FIREBASE_PROJECT_ID"  
+AUTH_FIREBASE_CLIENT_EMAIL="FIREBASE_CLIENT_EMAIL"  
+AUTH_FIREBASE_PRIVATE_KEY="FIREBASE_PRIVATE_KEY"
+```
+To generate a random `AUTH_SECRET`, simply run:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
+npx auth
+```
+### Run the Development Server
+
+Once your environment variables are set, you can start the development server using one of these commands:
+```bash
+npm run dev  
+or  
+yarn dev  
+or  
+pnpm dev  
+or  
 bun dev
 ```
+## 📖 Contributing
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+New to open-source contributions? No worries! Follow these steps to start contributing:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Fork the Repository & Create a Pull Request
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Check out this [guide on creating a fork and submitting a pull request](https://www.youtube.com/watch?v=nT8KGYVurIU). It covers the entire process!
 
-## Learn More
+### Set Up the Repo Locally
 
-To learn more about Next.js, take a look at the following resources:
+If you're new to GitHub Desktop, this [tutorial](https://www.youtube.com/watch?v=UGokwtIn1Hk) will help you set up and clone the repo.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Submit Your Changes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+After making your contributions, push them to your fork and submit a pull request. 🎉
 
-## Deploy on Vercel
+## 🛠️ Tech Stack
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+This project uses the following technologies:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Next.js** 🖥️: A React framework for building server-side rendered applications.
+- **Auth.js** 🔐: Authentication solutions like Google OAuth.
+- **Firebase** 🔥: Backend for managing authentication, real-time data, and more.
+
+## 🧑‍💻 Useful Commands :
+
+- **Install Dependencies:**  
+```bash
+  npm install  
+  or  
+  yarn install
+```
+- **Start Development Server:**  
+```bash
+  npm run dev  
+  or  
+  yarn dev
+```
+
+Feel free to explore, jump in, and contribute! Happy coding! 😎
