@@ -67,7 +67,8 @@ export default function Home() {
                 className="flex gap-3 text-lg p-3"
                 onClick={() => {
                   gameStore.endGame();
-                  router.push("/play");                  
+                  gameStore.reset();
+                  router.push("/play");
                 }}
               >
                 <PlayIcon /> Play Now

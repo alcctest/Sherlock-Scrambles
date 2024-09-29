@@ -22,7 +22,17 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { FaHeart, FaHeartCrack } from "react-icons/fa6";
 import useSWR from "swr";
+function millisToMinutesAndSeconds(millis: number): string {
+  const totalSeconds = Math.floor(millis / 1000);
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
 
+  // Format minutes and seconds to be two digits
+  const formattedMinutes = String(minutes).padStart(2, "0");
+  const formattedSeconds = String(seconds).padStart(2, "0");
+
+  return `${formattedMinutes}:${formattedSeconds}`;
+}
 export default function PlayPage() {
   let { data: session, status } = useSession();
   let router = useRouter();
@@ -51,6 +61,7 @@ export default function PlayPage() {
       </div>
     );
   }
+  console.log(gameStore);
   return (
     <div className="h-screen flex flex-col">
       <NavBar />
@@ -64,7 +75,7 @@ export default function PlayPage() {
       >
         <div className="flex justify-center items-center h-full flex-col">
           <div className="rounded-lg p-6 flex justify-center items-center flex-col w-full">
-            {!gameStore.isGameStarted && !gameStore.endTime && (
+            {!gameStore.isGameStarted && !gameStore.isGameEnded && (
               <Card className="w-full md:w-[450px]">
                 <CardHeader className="flex justify-center items-center text-center">
                   <CardTitle>Ready to Play?</CardTitle>
@@ -144,20 +155,99 @@ export default function PlayPage() {
               </Card>
             )}
           </div>
-          {gameStore.isGameStarted && (
-              <WordSearchGame
-                key={1}
-                grid={gameStore.grid}
-                words={gameStore.wordPool}
-              />
-            )}
-          {
-            !gameStore.isGameStarted && gameStore.endTime && (
-              <div>
-
-              </div>
-            )
-          }
+          {gameStore.isGameStarted && !gameStore.isGameEnded && (
+            <WordSearchGame
+              key={1}
+              grid={gameStore.grid}
+              words={gameStore.wordPool}
+            />
+          )}
+          {gameStore.isGameStarted && gameStore.isGameEnded && (
+            <Card className="w-full md:w-[450px]">
+              <CardHeader className="flex justify-center items-center text-center">
+                <CardTitle>Congratulations!</CardTitle>
+                <CardDescription>
+                  You've found all the words, well done Sherlock!
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="flex justify-center flex-col flex-wrap items-center text-center">
+                <h4 className="text-lg font-bold">Time Taken</h4>
+                <span className="mb-3 text-lg text-bold">
+                  {millisToMinutesAndSeconds(
+                    gameStore.endTime! - gameStore.startTime!
+                  )}
+                </span>
+                <h4 className="text-lg font-bold mb-4">Attempts</h4>
+                <div className="flex space-x-2 text-blue-950">
+                  {Array.from(
+                    { length: attemptData.data.attempts },
+                    (_, index) => (
+                      <FaHeart key={index} size={32} />
+                    )
+                  )}
+                  {Array.from(
+                    { length: 3 - attemptData.data.attempts },
+                    (_, index) => (
+                      <FaHeartCrack
+                        key={index + attemptData.data.attempts}
+                        size={32}
+                      />
+                    )
+                  )}
+                </div>
+                {attemptData.data.attempts > 0 ? (
+                  <div className="m-3">
+                    <Button
+                      size={"lg"}
+                      variant={"default"}
+                      className="flex gap-3 text-lg p-3"
+                      disabled={gameStore.isLoading}
+                      onClick={() => {
+                        gameStore.setLoading(true);
+                        fetch("/api/attempt", {
+                          method: "POST",
+                        })
+                          .then((res) => res.json())
+                          .then(
+                            ({
+                              data,
+                            }: {
+                              data: {
+                                grid: string[][];
+                                words: string[];
+                                xorKey: number[];
+                              };
+                            }) => {
+                              gameStore.reset();
+                              gameStore.setLoading(false);
+                              gameStore.startGame(
+                                true,
+                                data.words,
+                                data.grid,
+                                data.xorKey
+                              );
+                            }
+                          );
+                      }}
+                    >
+                      <PlayIcon /> Start Game
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="m-3">
+                    <Button
+                      size={"lg"}
+                      variant={"default"}
+                      className="flex gap-3 text-lg p-3"
+                      disabled={true}
+                    >
+                      <FaHeartCrack size={24} /> No Attempts Left
+                    </Button>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          )}
         </div>
       </div>
     </div>

@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 
 enum Error {
   Configuration = "Configuration",
-  AccessDenied = "AccessDenied"
+  AccessDenied = "AccessDenied",
 }
 
 const errorMap = {
@@ -18,11 +18,11 @@ const errorMap = {
   ),
   [Error.AccessDenied]: (
     <p>
-      You need to signed in to access the page with the college email. Please{" "}
+      You need to be signed in with a college email to access the page. Please{" "}
       <a href="/signin" className="text-blue-900 underline">
         sign in
       </a>{" "}
-      to continue.
+      again to continue.
     </p>
   ),
 };
@@ -50,8 +50,8 @@ export default function ErrorPage() {
             <div className="text-lg text-center">
               {errorMap[error] || (
                 <p>
-                  There was a problem when trying to authenticate. 
-                  Please contact us if this error persists.
+                  There was a problem when trying to authenticate. Please
+                  contact us if this error persists.
                 </p>
               )}
             </div>
