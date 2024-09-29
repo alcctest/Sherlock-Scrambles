@@ -22,6 +22,7 @@ export const getRemainingAttempts = async (email: string): Promise<number> => {
   let attempts = await db.collection("users").where("email", "==", email).get();
   let attemptData = attempts.docs.map((doc) => doc.data());
   // ifNaN return 0
+  
   if (isNaN(attemptData[0]["attempts"])) {
     return 3;
   }

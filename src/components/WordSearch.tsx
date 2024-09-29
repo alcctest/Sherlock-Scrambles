@@ -165,7 +165,7 @@ export function WordSearchGame({ words, grid }: WordSearchGameProps) {
             row.map((cell, colIndex) => (
               <div
                 key={`${rowIndex}-${colIndex}`}
-                className={`aspect-square flex items-center justify-center cursor-pointer text-primary font-bold text-xs md:text-lg rounded transition-colors duration-200
+                className={`before:content-[attr(data-text)] aspect-square flex items-center justify-center cursor-pointer text-primary font-bold text-xs md:text-lg rounded transition-colors duration-200
                   ${
                     isSelected(rowIndex, colIndex)
                       ? "bg-blue-500"
@@ -173,12 +173,12 @@ export function WordSearchGame({ words, grid }: WordSearchGameProps) {
                       ? "bg-green-500"
                       : "bg-background"
                   }`}
+                // data text
+                data-text={cell}
                 aria-label={`${cell} at row ${rowIndex + 1}, column ${
                   colIndex + 1
                 }`}
-              >
-                {cell}
-              </div>
+              />
             ))
           )}
         </div>
