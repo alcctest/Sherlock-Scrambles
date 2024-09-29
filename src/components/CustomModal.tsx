@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useStore } from "@/stores/clientStore";
+import React from "react";
 
 interface CustomModalProps {
   header: string;

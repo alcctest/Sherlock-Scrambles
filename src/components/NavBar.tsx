@@ -41,7 +41,7 @@ export const NavBar: React.FC<NavBarProps> = (props) => {
           </Link>
           <div className="flex flex-col items-end space gap-1">
             <Link href={"https://bit.ly/panorama-sxc-alevel"}>
-              <Button variant="default" className="rounded-full bg-blue-950">
+              <Button variant="default" className="rounded-full bg-[#9E826F]">
                 View Panorama
               </Button>
             </Link>

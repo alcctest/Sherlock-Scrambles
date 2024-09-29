@@ -1,12 +1,14 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "./ui/scroll-area";
+import { twMerge } from "tailwind-merge";
 
 type LeaderboardProps = {
   players: {
     name: string;
     time: number;
     avatar: string;
+    position: number;
   }[];
 };
 
@@ -28,6 +30,13 @@ export default function Leaderboard({ players }: LeaderboardProps) {
     return "";
   };
 
+  const getTextStyle = (index: number) => {
+    if (index === 1) return "text-yellow-900";
+    if (index === 2) return "text-gray-900";
+    if (index === 3) return "text-yellow-900";
+    return "text-gray-800";
+  }
+
   function formatTime(time: number): string {
     const minutes = Math.floor(time / 60000);
     const seconds = ((time % 60000) / 1000).toFixed(0);
@@ -42,11 +51,11 @@ export default function Leaderboard({ players }: LeaderboardProps) {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        <ScrollArea>
+        <ScrollArea className="h-[350px] flex">
           {players.map((player, index) => (
             <div
               key={index}
-              className={`flex items-center space-x-4 p-2 rounded-lg ${getBorderStyle(
+              className={`flex items-center m-2 space-x-4 p-3 rounded-lg ${getBorderStyle(
                 index
               )}`}
             >
@@ -58,7 +67,13 @@ export default function Leaderboard({ players }: LeaderboardProps) {
                 <p className="text-sm font-medium leading-none">
                   {player.name} {getMedalEmoji(index)}
                 </p>
-                <p className="text-sm text-black">{formatTime(player.time)}</p>
+                <div className="flex w-full justify-between">
+                  <p className="text-sm text-black">{formatTime(player.time)}</p>
+                  <div className={twMerge("text-md font-bold  mr-2", getTextStyle(player.position))}>
+                    <span className="text-">#</span>
+                    <span>{player.position}</span>
+                  </div>
+                </div>
               </div>
             </div>
           ))}

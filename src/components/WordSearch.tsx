@@ -5,7 +5,6 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { StopwatchComponent } from "./stopwatch";
 import { useGameStore } from "@/stores/clientStore";
-import { twMerge } from "tailwind-merge";
 
 type WordSearchGameProps = {
   words: string[];
@@ -41,7 +40,6 @@ export function WordSearchGame({ words, grid }: WordSearchGameProps) {
 
   const handleSelectionStart = useCallback(
     (e: React.MouseEvent | React.TouchEvent) => {
-      e.preventDefault();
       const cell = getCellFromEvent(e);
       if (cell) {
         setIsSelecting(true);
@@ -54,7 +52,6 @@ export function WordSearchGame({ words, grid }: WordSearchGameProps) {
 
   const handleSelectionMove = useCallback(
     (e: React.MouseEvent | React.TouchEvent) => {
-      e.preventDefault();
       if (isSelecting && selectionStart) {
         const cell = getCellFromEvent(e);
         if (cell) {

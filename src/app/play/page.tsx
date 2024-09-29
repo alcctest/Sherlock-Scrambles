@@ -1,9 +1,6 @@
 "use client";
 
-import { auth } from "@/auth";
 import { NavBar } from "@/components/NavBar";
-import { StopwatchComponent } from "@/components/stopwatch";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -85,7 +82,7 @@ export default function PlayPage() {
                 </CardHeader>
                 <CardContent className="flex justify-center flex-col flex-wrap items-center text-center">
                   <h4 className="text-lg font-bold mb-4">Attempts</h4>
-                  <div className="flex space-x-2 text-blue-950">
+                  <div className="flex space-x-2 text-[#3e1f0a]">
                     {Array.from(
                       { length: attemptData.data.attempts },
                       (_, index) => (
@@ -178,7 +175,7 @@ export default function PlayPage() {
                   )}
                 </span>
                 <h4 className="text-lg font-bold mb-4">Attempts</h4>
-                <div className="flex space-x-2 text-blue-950">
+                <div className="flex space-x-2 text-[#3e1f0a]">
                   {Array.from(
                     { length: attemptData.data.attempts },
                     (_, index) => (

@@ -42,7 +42,7 @@ export default function Home() {
                 <Button
                   size={"lg"}
                   variant={"secondary"}
-                  className="flex gap-3 text-lg p-3"
+                  className="flex gap-3 h-14 rounded-full px-8 text-lg p-3 bg-[#3E1F0A] hover:bg-amber-900 text-white"
                   onClick={() => {}}
                   disabled
                 >
@@ -52,7 +52,7 @@ export default function Home() {
                 <Button
                   size={"lg"}
                   variant={"secondary"}
-                  className="flex gap-3 text-lg p-3"
+                  className="flex gap-3 h-14 rounded-full px-8 text-lg p-3 bg-[#3E1F0A] hover:bg-amber-900 text-white"
                   onClick={() => {
                     router.push("/signin");
                   }}
@@ -64,7 +64,7 @@ export default function Home() {
               <Button
                 size={"lg"}
                 variant={"secondary"}
-                className="flex gap-3 text-lg p-3"
+                className="flex gap-3 text-lg h-14 rounded-full bg-[#3E1F0A] text-white hover:bg-amber-900 px-8 p-3 "
                 onClick={() => {
                   gameStore.endGame();
                   gameStore.reset();
@@ -74,21 +74,14 @@ export default function Home() {
                 <PlayIcon /> Play Now
               </Button>
             )}
-            <Button
-              size={"lg"}
-              className="flex gap-3 text-lg p-3"
-              onClick={toggleHelpMenu}
-            >
-              <CiCircleQuestion size={32} />
-              How to Play?
-            </Button>
           </div>
           {!leaderboardLoading && leaderboard != null ? (
             <Leaderboard
-              players={leaderboard.data.map((player) => ({
+              players={leaderboard.data.map((player, index) => ({
                 avatar: player.image,
                 name: player.name,
                 time: player.time,
+                position: index + 1,
               }))}
             />
           ) : (
