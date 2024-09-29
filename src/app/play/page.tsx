@@ -187,7 +187,7 @@ export default function PlayPage() {
                   <span className="mb-3 text-lg text-bold">
                     {leaderboardStore.bestPosition == -1
                       ? "Loading..."
-                      : leaderboardStore.bestPosition.toString()}
+                      : leaderboardStore.bestPosition == 0 ? "N/A" : leaderboardStore.bestPosition.toString()}
                   </span>
                   <h4 className="text-lg font-bold mb-4">Attempts</h4>
                   <div className="flex space-x-2 text-[#3e1f0a]">
