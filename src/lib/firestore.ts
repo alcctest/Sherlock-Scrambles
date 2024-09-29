@@ -110,16 +110,16 @@ export const getLeaderboard = async () => {
   let users = await db
     .collection("users")
     .orderBy("time", "asc")
-    .limit(5)
+    .limit(10)
     .get();
   let leaderboard = users.docs.map((doc) => doc.data()) as {
     name: string;
     time: number;
     image: string;
   }[];
-  // make sure leaderboard has 5 players else fill with empty data
-  if (leaderboard.length < 5) {
-    let emptyData = Array(5 - leaderboard.length).fill({
+  // make sure leaderboard has 10 players else fill with empty data
+  if (leaderboard.length < 10) {
+    let emptyData = Array(10 - leaderboard.length).fill({
       name: "No one",
       time: 0,
       image:
