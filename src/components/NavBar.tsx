@@ -13,6 +13,7 @@ import React from "react";
 import { twMerge } from "tailwind-merge";
 import CustomModal from "./CustomModal";
 import { useStore } from "@/stores/clientStore";
+import CreditsModal from "./CreditsModal";
 
 interface NavBarProps {
   // Define any props you want to pass to the NavBar component
@@ -22,6 +23,7 @@ interface NavBarProps {
 export const NavBar: React.FC<NavBarProps> = (props) => {
   const { data: session } = useSession();
   const toggleHelp = useStore((state) => state.toggleHelpMenu);
+  const toggleCredits = useStore((state) => state.toggleCreditMenu);
   return (
     <div>
       <CustomModal
@@ -32,6 +34,7 @@ export const NavBar: React.FC<NavBarProps> = (props) => {
           "Compete: Your score will be ranked against other participants.",
         ]}
       />
+      <CreditsModal />
       <nav className={twMerge("bg-white shadow-sm m-1", props.className)}>
         <div className="container mx-auto px-4 py-2 flex justify-between items-center">
           <Link href={"/"}>
@@ -46,7 +49,7 @@ export const NavBar: React.FC<NavBarProps> = (props) => {
               </Button>
             </Link>
             <div className="flex items-center justify-center space-x-2">
-              <div className="w-24">
+              <div className="w-24 cursor-pointer" onClick={toggleCredits}>
                 <Image
                   src="/placeholder.png"
                   alt="Secondary Logo"

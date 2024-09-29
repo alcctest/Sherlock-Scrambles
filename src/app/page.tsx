@@ -9,7 +9,6 @@ import { LogInIcon, PlayIcon } from "lucide-react";
 import { useSession } from "next-auth/react";
 import useSWR from "swr";
 import { useRouter } from "next/navigation";
-import { CiCircleQuestion } from "react-icons/ci";
 
 export default function Home() {
   let router = useRouter();

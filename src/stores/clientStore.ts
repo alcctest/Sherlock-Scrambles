@@ -4,6 +4,9 @@ type Store = {
   isHelpOpen: boolean;
   setIsHelpOpen: (value: boolean) => void;
   toggleHelpMenu: () => void;
+  isCreditOpen: boolean;
+  setToggleCreditMenu: (value: boolean) => void;
+  toggleCreditMenu: () => void;
 };
 
 type LeaderboardStore = {
@@ -45,8 +48,11 @@ export const useLeaderboardStore = create<LeaderboardStore>((set) => ({
 
 export const useStore = create<Store>((set) => ({
   isHelpOpen: false,
+  isCreditOpen: false,
   setIsHelpOpen: (value: boolean) => set({ isHelpOpen: value }),
   toggleHelpMenu: () => set((state) => ({ isHelpOpen: !state.isHelpOpen })),
+  setToggleCreditMenu: (value: boolean) => set({ isCreditOpen: value }),
+  toggleCreditMenu: () => set((state) => ({ isCreditOpen: !state.isCreditOpen })),
 }));
 
 export const useGameStore = create<GameStore>((set, state) => ({
