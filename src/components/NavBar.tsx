@@ -58,7 +58,7 @@ export const NavBar: React.FC<NavBarProps> = (props) => {
                   className="w-full h-auto"
                 />
               </div>
-              {/* <CircleHelp className="w-6 h-6 text-black cursor-pointer" onClick={toggleHelp} /> */}
+              <CircleHelp className="w-6 h-6 text-black cursor-pointer" onClick={toggleHelp} />
               {session && (
                 <Link href={"/signout"}>
                   <LogOutIcon className="w-6 h-6 text-black" />
