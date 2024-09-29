@@ -6,6 +6,13 @@ type Store = {
   toggleHelpMenu: () => void;
 };
 
+type LeaderboardStore = {
+  currentPosition: number;
+  setCurrentPosition: (value: number) => void;
+  bestPosition: number;
+  setBestPosition: (value: number) => void;
+};
+
 type GameStore = {
   isGameStarted: boolean;
   isGameEnded: boolean;
@@ -28,6 +35,13 @@ type GameStore = {
   setLoading: (value: boolean) => void;
   reset: () => void;
 };
+
+export const useLeaderboardStore = create<LeaderboardStore>((set) => ({
+  currentPosition: -1,
+  setCurrentPosition: (value: number) => set({ currentPosition: value }),
+  bestPosition: -1,
+  setBestPosition: (value: number) => set({ bestPosition: value }),
+}));
 
 export const useStore = create<Store>((set) => ({
   isHelpOpen: false,
@@ -56,6 +70,9 @@ export const useGameStore = create<GameStore>((set, state) => ({
       grid,
       xorKey,
     });
+    useLeaderboardStore.setState({
+      currentPosition: -1,
+    });
   },
   endGame: () => {
     let endTime = Date.now();
@@ -67,7 +84,16 @@ export const useGameStore = create<GameStore>((set, state) => ({
     fetch("/api/leaderboard", {
       method: "POST",
       body: JSON.stringify({ data: dataToSend }),
-    });
+    })
+      .then((res) => res.json())
+      .then(({ data }) => {
+
+        let { currentPos, bestPos } = data.position;
+        useLeaderboardStore.setState({
+          bestPosition: bestPos,
+          currentPosition: currentPos,
+        });
+      });
 
     set({
       isGameStarted: true,

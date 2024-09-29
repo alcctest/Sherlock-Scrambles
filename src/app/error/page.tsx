@@ -1,7 +1,9 @@
 "use client";
 
 import { NavBar } from "@/components/NavBar";
+import { LoaderIcon } from "lucide-react";
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
 enum Error {
   Configuration = "Configuration",
@@ -27,10 +29,23 @@ const errorMap = {
   ),
 };
 
-export default function ErrorPage() {
+function ErrorDisplay() {
   const search = useSearchParams();
   const error = search.get("error") as Error;
 
+  return (
+    <div className="text-lg text-center">
+      {errorMap[error] || (
+        <p>
+          There was a problem when trying to authenticate. Please contact us if
+          this error persists.
+        </p>
+      )}
+    </div>
+  );
+}
+
+export default function ErrorPage() {
   return (
     <div className="h-screen flex flex-col">
       <NavBar />
@@ -47,14 +62,13 @@ export default function ErrorPage() {
             <h1 className="mb-2 flex flex-row items-center justify-center gap-2 text-2xl font-bold tracking-tight text-red-900">
               Something went wrong
             </h1>
-            <div className="text-lg text-center">
-              {errorMap[error] || (
-                <p>
-                  There was a problem when trying to authenticate. Please
-                  contact us if this error persists.
-                </p>
-              )}
-            </div>
+            <Suspense fallback={
+              <div className="text-center items-center justify-center">
+                <LoaderIcon className="h-20 w-20 text-blue-900 animate-spin" />
+              </div>
+            }>
+              <ErrorDisplay />
+            </Suspense>
           </div>
         </div>
       </div>

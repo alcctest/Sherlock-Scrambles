@@ -10,11 +10,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { WordSearchGame } from "@/components/WordSearch";
-import { useGameStore } from "@/stores/clientStore";
+import { useGameStore, useLeaderboardStore } from "@/stores/clientStore";
 import { HeartIcon, LoaderIcon, LogInIcon, PlayIcon } from "lucide-react";
 import { GetServerSidePropsContext } from "next";
 import { Session } from "next-auth";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { FaHeart, FaHeartCrack } from "react-icons/fa6";
@@ -43,6 +44,7 @@ export default function PlayPage() {
     };
   }>("/api/attempt");
   let gameStore = useGameStore();
+  let leaderboardStore = useLeaderboardStore();
 
   // Use a useEffect to handle redirection and avoid setState during render
   useEffect(() => {
@@ -160,90 +162,111 @@ export default function PlayPage() {
             />
           )}
           {gameStore.isGameStarted && gameStore.isGameEnded && (
-            <Card className="w-full md:w-[450px]">
-              <CardHeader className="flex justify-center items-center text-center">
-                <CardTitle>Congratulations!</CardTitle>
-                <CardDescription>
-                  You've found all the words, well done Sherlock!
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="flex justify-center flex-col flex-wrap items-center text-center">
-                <h4 className="text-lg font-bold">Time Taken</h4>
-                <span className="mb-3 text-lg text-bold">
-                  {millisToMinutesAndSeconds(
-                    gameStore.endTime! - gameStore.startTime!
-                  )}
-                </span>
-                <h4 className="text-lg font-bold mb-4">Attempts</h4>
-                <div className="flex space-x-2 text-[#3e1f0a]">
-                  {Array.from(
-                    { length: attemptData.data.attempts },
-                    (_, index) => (
-                      <FaHeart key={index} size={32} />
-                    )
-                  )}
-                  {Array.from(
-                    { length: 3 - attemptData.data.attempts },
-                    (_, index) => (
-                      <FaHeartCrack
-                        key={index + attemptData.data.attempts}
-                        size={32}
-                      />
-                    )
-                  )}
-                </div>
-                {attemptData.data.attempts > 0 ? (
-                  <div className="m-3">
-                    <Button
-                      size={"lg"}
-                      variant={"default"}
-                      className="flex gap-3 text-lg p-3"
-                      disabled={gameStore.isLoading}
-                      onClick={() => {
-                        gameStore.setLoading(true);
-                        fetch("/api/attempt", {
-                          method: "POST",
-                        })
-                          .then((res) => res.json())
-                          .then(
-                            ({
-                              data,
-                            }: {
-                              data: {
-                                grid: string[][];
-                                words: string[];
-                                xorKey: number[];
-                              };
-                            }) => {
-                              gameStore.reset();
-                              gameStore.setLoading(false);
-                              gameStore.startGame(
-                                true,
-                                data.words,
-                                data.grid,
-                                data.xorKey
-                              );
-                            }
-                          );
-                      }}
-                    >
-                      <PlayIcon /> Start Game
-                    </Button>
+            <div className="flex md:flex-row">
+              <Card className="w-full md:w-[450px]">
+                <CardHeader className="flex justify-center items-center text-center">
+                  <CardTitle>Congratulations!</CardTitle>
+                  <CardDescription>
+                    You've found all the words, well done Sherlock!
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="flex justify-center flex-col flex-wrap items-center text-center">
+                  <h4 className="text-lg font-bold">Time Taken</h4>
+                  <span className="mb-3 text-lg text-bold">
+                    {millisToMinutesAndSeconds(
+                      gameStore.endTime! - gameStore.startTime!
+                    )}
+                  </span>
+                  <h4 className="text-lg font-bold">Attempt Position</h4>
+                  <span className="mb-3 text-lg text-bold">
+                    {leaderboardStore.currentPosition == -1
+                      ? "Loading..."
+                      : leaderboardStore.currentPosition.toString()}
+                  </span>
+                  <h4 className="text-lg font-bold">Best Position</h4>
+                  <span className="mb-3 text-lg text-bold">
+                    {leaderboardStore.bestPosition == -1
+                      ? "Loading..."
+                      : leaderboardStore.bestPosition.toString()}
+                  </span>
+                  <h4 className="text-lg font-bold mb-4">Attempts</h4>
+                  <div className="flex space-x-2 text-[#3e1f0a]">
+                    {Array.from(
+                      { length: attemptData.data.attempts },
+                      (_, index) => (
+                        <FaHeart key={index} size={32} />
+                      )
+                    )}
+                    {Array.from(
+                      { length: 3 - attemptData.data.attempts },
+                      (_, index) => (
+                        <FaHeartCrack
+                          key={index + attemptData.data.attempts}
+                          size={32}
+                        />
+                      )
+                    )}
                   </div>
-                ) : (
-                  <div className="m-3">
-                    <Button
-                      size={"lg"}
-                      variant={"default"}
-                      className="flex gap-3 text-lg p-3"
-                      disabled={true}
-                    >
-                      <FaHeartCrack size={24} /> No Attempts Left
-                    </Button>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
+                  {attemptData.data.attempts > 0 ? (
+                    <div className="m-3">
+                      <Button
+                        size={"lg"}
+                        variant={"default"}
+                        className="flex gap-3 text-lg p-3"
+                        disabled={gameStore.isLoading}
+                        onClick={() => {
+                          gameStore.setLoading(true);
+                          fetch("/api/attempt", {
+                            method: "POST",
+                          })
+                            .then((res) => res.json())
+                            .then(
+                              ({
+                                data,
+                              }: {
+                                data: {
+                                  grid: string[][];
+                                  words: string[];
+                                  xorKey: number[];
+                                };
+                              }) => {
+                                gameStore.reset();
+                                gameStore.setLoading(false);
+                                gameStore.startGame(
+                                  true,
+                                  data.words,
+                                  data.grid,
+                                  data.xorKey
+                                );
+                              }
+                            );
+                        }}
+                      >
+                        <PlayIcon /> Start Game
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="m-3">
+                      <Button
+                        size={"lg"}
+                        variant={"default"}
+                        className="flex gap-3 text-lg p-3"
+                        disabled={true}
+                      >
+                        <FaHeartCrack size={24} /> No Attempts Left
+                      </Button>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+              <Image
+                src="/character.png"
+                alt="Sherlock Holmes"
+                className="hidden md:block"
+                width={300}
+                height={600}
+              />
+            </div>
           )}
         </div>
       </div>

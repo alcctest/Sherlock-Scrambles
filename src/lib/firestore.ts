@@ -86,10 +86,7 @@ export const generateGameGrid = (words: string[]) => {
 };
 
 export const findPosition = async (time: number) => {
-  let users = await db
-    .collection("users")
-    .orderBy("time", "asc")
-    .get();
+  let users = await db.collection("users").orderBy("time", "asc").get();
   let userDocs = users.docs.map((doc) => doc.data());
   let position = 1;
   for (let user of userDocs) {
@@ -100,34 +97,54 @@ export const findPosition = async (time: number) => {
     }
   }
   return position;
-}
+};
 
 export const saveAttempt = async (
   email: string,
   time: number,
   foundWords: string[]
-): Promise<number> => {
+): Promise<{
+  currentPos: number;
+  bestPos: number;
+}> => {
   // get the user document, and update the time field if the time is less than the current time
   let doc = await db.collection("users").where("email", "==", email).get();
   // calculate the position of the user in the leaderboard
-  let position = await findPosition(time);
   let userDoc = doc.docs[0];
   if (!userDoc) {
     throw new Error("User not found");
   }
   let userData = userDoc.data();
+  let curPosition = await findPosition(time);
+  let bestPosition = userData["time"]
+    ? await findPosition(userData["time"])
+    : 0;
+  if (curPosition < bestPosition) {
+    bestPosition = curPosition;
+  }
   // check if all words are found
-  let allWordsFound = (userData.words as string[]).every((word) => foundWords.includes(word));
+  let allWordsFound = (userData.words as string[]).every((word) =>
+    foundWords.includes(word)
+  );
   if (!allWordsFound) {
-    return -1;
+    return {
+      currentPos: curPosition,
+      bestPos: bestPosition,
+    };
   }
   if (userData["time"] && time > userData["time"]) {
-    return position; 
+    return {
+      currentPos: curPosition,
+      bestPos: bestPosition,
+    };
   }
   await userDoc.ref.update({
     time,
   });
-  return position;
+  return {
+    currentPos: curPosition,
+    bestPos: bestPosition,
+  };
 };
 
 // get the leaderboard of the top 5 players with the fastest time and their names and avatars

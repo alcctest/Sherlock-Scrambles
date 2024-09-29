@@ -92,7 +92,6 @@ export function WordSearchGame({ words, grid }: WordSearchGameProps) {
       const selectedWord = selectedCells
         .map(([row, col]) => grid[row][col])
         .join("");
-      console.log("Selected word:", selectedWord);
       setSelectedCells([]);
       if (gameStore.checkWord(selectedWord)) {
         setFoundWords([...foundWords, selectedWord]);
@@ -102,7 +101,6 @@ export function WordSearchGame({ words, grid }: WordSearchGameProps) {
         }
       }
     } catch (ignored) {
-      console.log(ignored);
     }
   }, [selectedCells, grid]);
 
