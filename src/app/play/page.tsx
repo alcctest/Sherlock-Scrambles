@@ -66,16 +66,16 @@ export default function PlayPage() {
     <div className="h-screen flex flex-col">
       <NavBar />
       <div
-        className="h-full w-full"
+        className="min-h-full w-full"
         style={{
           backgroundImage: 'url("/background-image.png")',
           backgroundSize: "cover", // Cover the entire div
           backgroundPosition: "center",
         }}
       >
-        <div className="flex justify-center items-center h-full flex-col">
-          <div className="rounded-lg p-6 flex justify-center items-center flex-col w-full">
-            {!gameStore.isGameStarted && !gameStore.isGameEnded && (
+        <div className="flex justify-center items-center min-h-full flex-col">
+          {!gameStore.isGameStarted && !gameStore.isGameEnded && (
+            <div className="rounded-lg p-6 flex justify-center items-center flex-col w-full">
               <Card className="w-full md:w-[450px]">
                 <CardHeader className="flex justify-center items-center text-center">
                   <CardTitle>Ready to Play?</CardTitle>
@@ -153,8 +153,8 @@ export default function PlayPage() {
                   )}
                 </CardContent>
               </Card>
-            )}
-          </div>
+            </div>
+          )}
           {gameStore.isGameStarted && !gameStore.isGameEnded && (
             <WordSearchGame
               key={1}

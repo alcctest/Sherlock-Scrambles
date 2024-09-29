@@ -136,12 +136,12 @@ export function WordSearchGame({ words, grid }: WordSearchGameProps) {
   }, []);
 
   return (
-    <Card className="max-w-lg flex flex-col">
+    <Card className="max-w-80 md:max-w-lg flex flex-col">
       <CardHeader>
         <StopwatchComponent />
       </CardHeader>
       <CardContent className="p-4">
-        <div className="mb-4 flex flex-wrap gap-2">
+        <div className="mb-4 flex flex-wrap gap-1 md:gap-2">
           {words.map((word) => (
             <Badge
               key={word}
@@ -170,7 +170,7 @@ export function WordSearchGame({ words, grid }: WordSearchGameProps) {
             row.map((cell, colIndex) => (
               <div
                 key={`${rowIndex}-${colIndex}`}
-                className={`aspect-square flex items-center justify-center cursor-pointer text-primary font-bold text-lg rounded transition-colors duration-200
+                className={`aspect-square flex items-center justify-center cursor-pointer text-primary font-bold text-xs md:text-lg rounded transition-colors duration-200
                   ${
                     isSelected(rowIndex, colIndex)
                       ? "bg-blue-500"
