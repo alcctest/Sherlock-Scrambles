@@ -52,7 +52,7 @@ export default function CreditsModal() {
                 <li>Sushant Pangeni (Project Lead)</li>
                 <li>Shrijan Poudel</li>
                 <li>Aarogya Nepal</li>
-                <li>Baman Guragain</li>
+                <li>Baman Prasad Guragain</li>
                 <li>Parchetash Dhakal</li>
                 <li>Pratyush Raj Jha</li>
                 <li>Prerit Gautam</li>
