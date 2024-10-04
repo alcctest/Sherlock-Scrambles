@@ -62,8 +62,8 @@ export default function CreditsModal() {
                 <li>Stuti Upreti</li>
               </ul>
               <p>Special thanks to the VISTAS Team for presenting a platform inviting creative collaboration.</p>
-              {/* <p>The code of the game is publicly available via the <a href="https://github.com/SXC-ALCC/Weave-Game-TS" className="text-blue-900">GitHub Repository</a> to allow for further collaboration and feature requests.</p>
-              <p className="text-sm italic text-slate-200">Special thanks to Krish Llama for his unwavering support and encouragement during late-night sessions.</p> */}
+              <p>The code of the game is publicly available via the <a href="https://github.com/SXC-ALCC/Weave-Game-TS" className="text-blue-900">GitHub Repository</a> to allow for further collaboration and feature requests.</p>
+              <p className="text-sm italic text-slate-200">Special thanks to Krish Llama for his unwavering support and encouragement during late-night sessions.</p>
             </div>
           </DialogDescription>
         </DialogContent>
