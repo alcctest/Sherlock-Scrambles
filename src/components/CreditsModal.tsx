@@ -9,9 +9,9 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { useStore } from "@/stores/clientStore";
-import React from "react";
-export default function CreditsModal() {
+import { ureact";
+export default function CrediseStore } from "@/stores/clientStore";
+import React from "tsModal() {
   let isOpen = useStore((state) => {
     return state.isCreditOpen;
   });
@@ -62,8 +62,8 @@ export default function CreditsModal() {
                 <li>Stuti Upreti</li>
               </ul>
               <p>Special thanks to the VISTAS Team for presenting a platform inviting creative collaboration.</p>
-              <p>The code of the game is publicly available via the <a href="https://github.com/SXC-ALCC/Weave-Game-TS" className="text-blue-900">GitHub Repository</a> to allow for further collaboration and feature requests.</p>
-              <p><a href="mailto:alcc@sxc.edu.np">ALCC</a></p>
+              <p>The code of the game is publicly available via the <a target="_blank" href="https://github.com/SXC-ALCC/Sherlock-Scrambles-Ts" className="text-blue-900">GitHub Repository</a> to allow for further collaboration and feature requests.</p>
+              <p>Email : <a href="mailto:alcc@sxc.edu.np">ALCC</a></p>
             </div>
           </DialogDescription>
         </DialogContent>
