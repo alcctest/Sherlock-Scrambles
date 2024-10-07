@@ -9,9 +9,9 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { ureact";
-export default function CrediseStore } from "@/stores/clientStore";
-import React from "tsModal() {
+import { useStore } from "@/stores/clientStore";
+import React from "react";
+export default function CreditsModal() {
   let isOpen = useStore((state) => {
     return state.isCreditOpen;
   });
