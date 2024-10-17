@@ -60,7 +60,6 @@ export default function CreditsModal() {
                 <li>Samip Panthi</li>
                 <li>Shriyans Shrestha</li>
                 <li>Stuti Upreti</li>
-                <li>Creation Duwal</li>
               </ul>
               <p>Special thanks to the VISTAS Team for presenting a platform inviting creative collaboration.</p>
               <p>The code of the game is publicly available via the <a target="_blank" href="https://github.com/SXC-ALCC/Sherlock-Scrambles-Ts" className="text-blue-900">GitHub Repository</a> to allow for further collaboration and feature requests.</p>
