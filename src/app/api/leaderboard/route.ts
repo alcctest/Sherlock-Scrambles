@@ -20,13 +20,12 @@ export const POST = auth(async function POST(req) {
 
   const data = (await req.json()) as {
     data: {
-      time: number;
       foundWords: string[];
       solutions: { [key: string]: string[] };
     }
   };
   console.log(data);
-  if (!data || !data.data || !data.data.foundWords || !data.data.time || !data.data.solutions) {
+  if (!data || !data.data || !data.data.foundWords || !data.data.solutions) {
     return NextResponse.json({
       status: 406,
       message: "Invalid data provided.",
