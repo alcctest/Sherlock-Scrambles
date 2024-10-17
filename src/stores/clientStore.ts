@@ -109,6 +109,7 @@ export const useGameStore = create<GameStore>((set, state) => ({
       endTime,
       wordPool: [],
       grid: [],
+      solutions: {},
     });
     return endTime;
   },
