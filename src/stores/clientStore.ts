@@ -1,3 +1,4 @@
+import { Position } from "@/lib/wordsearch/utils";
 import { create } from "zustand";
 
 type Store = {
@@ -21,7 +22,7 @@ type GameStore = {
   isGameEnded: boolean;
   xorKey: number[];
   wordPool: string[];
-  alreadyFound: string[];
+  solutions: { [key: string]: Position[] };
   grid: string[][];
   startTime?: number;
   endTime?: number;
@@ -33,7 +34,7 @@ type GameStore = {
     xorKey: number[]
   ) => void;
   endGame: () => number;
-  checkWord: (word: string) => boolean;
+  checkWord: (word: string, path: Position[]) => boolean;
   checkAlreadyFound: (word: string) => boolean;
   setLoading: (value: boolean) => void;
   reset: () => void;
@@ -52,7 +53,8 @@ export const useStore = create<Store>((set) => ({
   setIsHelpOpen: (value: boolean) => set({ isHelpOpen: value }),
   toggleHelpMenu: () => set((state) => ({ isHelpOpen: !state.isHelpOpen })),
   setToggleCreditMenu: (value: boolean) => set({ isCreditOpen: value }),
-  toggleCreditMenu: () => set((state) => ({ isCreditOpen: !state.isCreditOpen })),
+  toggleCreditMenu: () =>
+    set((state) => ({ isCreditOpen: !state.isCreditOpen })),
 }));
 
 export const useGameStore = create<GameStore>((set, state) => ({
@@ -84,7 +86,8 @@ export const useGameStore = create<GameStore>((set, state) => ({
     let endTime = Date.now();
     let dataToSend = {
       time: endTime - (state().startTime || 0),
-      foundWords: state().alreadyFound,
+      foundWords: Object.keys(state().solutions),
+      solutions: state().solutions,
     };
     // send encryptedBytes to server
     fetch("/api/leaderboard", {
@@ -93,7 +96,6 @@ export const useGameStore = create<GameStore>((set, state) => ({
     })
       .then((res) => res.json())
       .then(({ data }) => {
-
         let { currentPos, bestPos } = data.position;
         useLeaderboardStore.setState({
           bestPosition: bestPos,
@@ -119,17 +121,17 @@ export const useGameStore = create<GameStore>((set, state) => ({
       grid: [],
     });
   },
-  alreadyFound: [],
-  checkWord: (word: string) => {
+  solutions: {},
+  checkWord: (word: string, path: Position[]) => {
     let found = state().wordPool.includes(word);
     console.log(found);
     if (found) {
-      set((state) => ({ alreadyFound: [...state.alreadyFound, word] }));
+      set((state) => ({ solutions: { ...state.solutions, [word]: path } }));
     }
     return found;
   },
   checkAlreadyFound: (word: string) => {
-    return state().alreadyFound.includes(word);
+    return Object.keys(state().solutions).includes(word);
   },
   isLoading: false,
   setLoading: (value: boolean) => set({ isLoading: value }),

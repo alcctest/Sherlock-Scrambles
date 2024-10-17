@@ -92,16 +92,18 @@ export function WordSearchGame({ words, grid }: WordSearchGameProps) {
       const selectedWord = selectedCells
         .map(([row, col]) => grid[row][col])
         .join("");
+      const solution = selectedCells.map(([row, col]) => {
+        return { x: col, y: row };
+      });
       setSelectedCells([]);
-      if (gameStore.checkWord(selectedWord)) {
+      if (gameStore.checkWord(selectedWord, solution)) {
         setFoundWords([...foundWords, selectedWord]);
         setFoundCells([...foundCells, ...selectedCells]);
         if (foundWords.length >= words.length - 1) {
           gameStore.endGame();
         }
       }
-    } catch (ignored) {
-    }
+    } catch (ignored) {}
   }, [selectedCells, grid]);
 
   const isSelected = useCallback(
