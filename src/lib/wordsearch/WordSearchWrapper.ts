@@ -47,7 +47,7 @@ class WordSearch {
         return utils;
     }
 
-    buildGame(retries: number = 0): { grid: string[][]; words: Word[] } {
+    buildGame(retries: number = 0): { grid: string[][]; words: Word[], solutions: { [key: string]: Position[] } } {
         let grid = utils.createGrid(this.settings.cols, this.settings.rows);
         const addedWords: Word[] = [];
         const dict = shuffle(this.settings.dictionary);
@@ -73,6 +73,10 @@ class WordSearch {
 
         addedWords.sort((a, b) => (a.clean > b.clean ? 1 : -1));
         grid = utils.fillGrid(grid, this.settings.upperCase);
+        let solutions: {[key: string]: Position[]} ={} ;
+        addedWords.forEach(item => {
+            solutions[item.word] = item.path;
+        });
 
         if (this.cleanForbiddenWords.length) {
             const forbiddenWordsFound = utils.filterWordsInGrid(this.cleanForbiddenWords, grid);
@@ -85,7 +89,7 @@ class WordSearch {
             }
         }
 
-        return { grid, words: addedWords };
+        return { grid, words: addedWords, solutions };
     }
 
     cleanWord(word: string): string {

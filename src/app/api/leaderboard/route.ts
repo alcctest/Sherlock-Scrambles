@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
 import { db, getLeaderboard, saveAttempt } from "@/lib/firestore";
+import { Position } from "@/lib/wordsearch/utils";
 import { NextResponse } from "next/server";
 
 export const GET = async () => {
@@ -20,18 +21,17 @@ export const POST = auth(async function POST(req) {
 
   const data = (await req.json()) as {
     data: {
-      time: number;
-      foundWords: string[];
-    }
+      solutions: { [key: string]: Position[] };
+    };
   };
   console.log(data);
-  if (!data || !data.data || !data.data.foundWords || !data.data.time) {
+  if (!data || !data.data || !data.data.solutions) {
     return NextResponse.json({
       status: 406,
       message: "Invalid data provided.",
     });
   }
-  let position = await saveAttempt(req.auth.user.email, data.data.time, data.data.foundWords);
+  let position = await saveAttempt(req.auth.user.email, data.data.solutions);
 
   return NextResponse.json({
     status: 200,
