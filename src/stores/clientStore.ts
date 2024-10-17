@@ -83,6 +83,7 @@ export const useGameStore = create<GameStore>((set, state) => ({
     });
   },
   endGame: () => {
+    let endTime = Date.now();
     let dataToSend = {
       foundWords: Object.keys(state().solutions),
       solutions: state().solutions,
