@@ -20,18 +20,17 @@ export const POST = auth(async function POST(req) {
 
   const data = (await req.json()) as {
     data: {
-      foundWords: string[];
       solutions: { [key: string]: string[] };
-    }
+    };
   };
   console.log(data);
-  if (!data || !data.data || !data.data.foundWords || !data.data.solutions) {
+  if (!data || !data.data || !data.data.solutions) {
     return NextResponse.json({
       status: 406,
       message: "Invalid data provided.",
     });
   }
-  let position = await saveAttempt(req.auth.user.email,data.data.foundWords, data.data.solutions);
+  let position = await saveAttempt(req.auth.user.email, data.data.solutions);
 
   return NextResponse.json({
     status: 200,

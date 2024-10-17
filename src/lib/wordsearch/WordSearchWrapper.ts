@@ -1,4 +1,4 @@
-import { shuffle, merge, difference, cloneDeep, map } from "lodash";
+import { shuffle, merge, difference, cloneDeep } from "lodash";
 import * as utils from "./utils";
 import defaultSettings, { WordSearchConfig } from "./wordSearchDefaultConfig";    
 import { Position } from "./utils";

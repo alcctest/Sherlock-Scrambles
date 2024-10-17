@@ -1,6 +1,7 @@
 import { initFirestore } from "@auth/firebase-adapter";
 import { cert } from "firebase-admin/app";
 import WordSearch from "./wordsearch/WordSearchWrapper";
+import _ from "lodash";
 
 export const db = initFirestore({
   credential: cert({
@@ -106,7 +107,6 @@ export const findPosition = async (time: number) => {
 
 export const saveAttempt = async (
   email: string,
-  foundWords: string[],
   solutions: { [key: string]: string[] }
 ): Promise<{
   currentPos: number;
@@ -129,13 +129,12 @@ export const saveAttempt = async (
     bestPosition = curPosition;
   }
   // check if all words are found
+  let foundWords = Object.keys(solutions);
   let allWordsFound = (userData.words as string[]).every((word) =>
     foundWords.includes(word)
   );
-  let allSolutionsMatch = Object.keys(userData.solutions).every(
-    (word) =>
-      JSON.stringify(userData.solutions[word]) ===
-      JSON.stringify(solutions[word])
+  let allSolutionsMatch = Object.keys(userData.solutions).every((word) =>
+    _.isEqual(userData.solutions[word], solutions[word])
   );
 
   if (!allWordsFound || !allSolutionsMatch) {
