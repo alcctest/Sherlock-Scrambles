@@ -2,6 +2,7 @@ import { initFirestore } from "@auth/firebase-adapter";
 import { cert } from "firebase-admin/app";
 import WordSearch from "./wordsearch/WordSearchWrapper";
 import _ from "lodash";
+import { Position } from "./wordsearch/utils";
 
 export const db = initFirestore({
   credential: cert({
@@ -107,7 +108,7 @@ export const findPosition = async (time: number) => {
 
 export const saveAttempt = async (
   email: string,
-  solutions: { [key: string]: string[] }
+  solutions: { [key: string]: Position[] }
 ): Promise<{
   currentPos: number;
   bestPos: number;

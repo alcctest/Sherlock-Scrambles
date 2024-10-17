@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
 import { db, getLeaderboard, saveAttempt } from "@/lib/firestore";
+import { Position } from "@/lib/wordsearch/utils";
 import { NextResponse } from "next/server";
 
 export const GET = async () => {
@@ -20,7 +21,7 @@ export const POST = auth(async function POST(req) {
 
   const data = (await req.json()) as {
     data: {
-      solutions: { [key: string]: string[] };
+      solutions: { [key: string]: Position[] };
     };
   };
   console.log(data);
