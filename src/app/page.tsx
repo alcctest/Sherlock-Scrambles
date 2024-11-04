@@ -41,8 +41,8 @@ export default function Home() {
                 <Button
                   size={"lg"}
                   variant={"secondary"}
-                  className="flex gap-3 h-14 rounded-full px-8 text-lg p-3 bg-[#3E1F0A] hover:bg-amber-900 text-white"
-                  onClick={() => {}}
+                  className="flex gap-3 h-14 rounded-full px-8 text-lg p-3 bg-[#2B170E] hover:bg-amber-900 text-white"
+                  onClick={() => { }}
                   disabled
                 >
                   <PlayIcon /> Play Now
@@ -51,7 +51,7 @@ export default function Home() {
                 <Button
                   size={"lg"}
                   variant={"secondary"}
-                  className="flex gap-3 h-14 rounded-full px-8 text-lg p-3 bg-[#3E1F0A] hover:bg-amber-900 text-white"
+                  className="flex gap-3 h-14 rounded-full px-8 text-lg p-3 bg-[#28170E] hover:bg-amber-900 text-white"
                   onClick={() => {
                     router.push("/signin");
                   }}
@@ -63,7 +63,7 @@ export default function Home() {
               <Button
                 size={"lg"}
                 variant={"secondary"}
-                className="flex gap-3 text-lg h-14 rounded-full bg-[#3E1F0A] text-white hover:bg-amber-900 px-8 p-3 "
+                className="flex gap-3 text-lg h-14 rounded-full bg-[#2B170E] text-white hover:bg-amber-900 px-8 p-3 "
                 onClick={() => {
                   gameStore.endGame();
                   gameStore.reset();
